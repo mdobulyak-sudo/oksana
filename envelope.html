@@ -1,0 +1,485 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Oksana & Guy | Wedding Invitation</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Italianno&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ivory: #f5f0e8;
+      --ink: #5a4a3e;
+      --gold: #b89b61;
+
+      /* WAX SEAL: ADJUST ONLY THESE THREE VALUES */
+      --seal-x: 50.5%;
+      --seal-y: 60%;
+      --seal-size: 235px;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      background: var(--ivory);
+      color: var(--ink);
+      font-family: "Cormorant Garamond", serif;
+      overflow: hidden;
+    }
+
+    /* ENVELOPE SCREEN */
+
+    .envelope-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 24px;
+      overflow: hidden;
+      background: #eee7dc;
+
+      opacity: 1;
+      visibility: visible;
+
+      transition:
+        opacity 1.2s ease,
+        visibility 1.2s ease;
+    }
+
+    .envelope-screen.leaving {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .envelope-stage {
+      position: relative;
+
+      width: min(92vw, 900px);
+      max-height: calc(100vh - 100px);
+
+      aspect-ratio: var(--envelope-ratio, 3 / 2);
+
+      flex-shrink: 0;
+      animation: cameraIn 1.4s ease both;
+    }
+
+    .envelope-photo {
+      position: absolute;
+      inset: 0;
+
+      display: block;
+      width: 100%;
+      height: 100%;
+
+      object-fit: contain;
+      object-position: center;
+
+      user-select: none;
+      pointer-events: none;
+      -webkit-user-drag: none;
+
+      transition: opacity 1s ease;
+    }
+
+    .envelope-open {
+      opacity: 0;
+    }
+
+    .envelope-stage.opening .envelope-closed {
+      opacity: 0;
+    }
+
+    .envelope-stage.opening .envelope-open {
+      opacity: 1;
+    }
+
+    /* WAX SEAL — POSITION AND SIZE */
+
+    .seal-button {
+            position: absolute;
+            z-index: 3;
+
+            left: var(--seal-x);
+            top: var(--seal-y);
+
+            width: var(--seal-size);
+            height: var(--seal-size);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+
+              background: transparent;
+              cursor: pointer;
+
+              transform: translate(-50%, -50%);
+
+              transition:
+                transform 0.3s ease,
+                opacity 0.5s ease;
+              opacity: 1;
+          }
+
+
+/* Hide the instruction after clicking */
+.envelope-stage.opening .hint {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  pointer-events: none;
+}
+
+    .seal-button img {
+      display: block;
+      width: 100%;
+      height: 100%;
+
+      object-fit: contain;
+      object-position: center;
+
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .seal-button:hover {
+      transform: translate(-50%, -50%) scale(1.04);
+    }
+
+    .seal-button:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 5px;
+    }
+
+
+/* Wax seal motion */
+.envelope-stage.opening .seal-button {
+  animation: waxSealLift 0.9s ease-out forwards;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes waxSealLift {
+  from { opacity: 1;}
+
+ to { opacity: 0; }
+}
+
+
+    /* INSTRUCTION */
+
+    .hint {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+
+      width: 100%;
+
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      line-height: 1.6;
+      text-transform: uppercase;
+      color: #6f2638;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
+
+      animation: hintFade 1.5s ease-in-out infinite alternate;
+    }
+
+    /* WEDDING COVER */
+
+    .cover {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 24px;
+
+      opacity: 0;
+      visibility: hidden;
+
+      background:
+        linear-gradient(
+          rgba(30, 25, 20, 0.18),
+          rgba(30, 25, 20, 0.18)
+        ),
+        url("Images/cover.jpg") center 55% / cover no-repeat;
+
+      transition:
+        opacity 1.5s ease,
+        visibility 1.5s ease;
+    }
+
+    .cover.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .frame {
+      width: min(100%, 560px);
+      padding: 60px 28px;
+
+      text-align: center;
+
+      background: rgba(250, 247, 241, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+
+      outline: 1px solid rgba(255, 255, 255, 0.65);
+      outline-offset: -10px;
+
+      box-shadow: 0 15px 60px rgba(0, 0, 0, 0.08);
+    }
+
+    .small-heading {
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .names {
+      margin: 18px 0;
+
+      font-family: "Italianno", cursive;
+      font-size: clamp(58px, 10vw, 88px);
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .date {
+      margin: 24px 0 30px;
+
+      font-size: 16px;
+      letter-spacing: 4px;
+    }
+
+    .discover {
+      display: inline-block;
+      padding: 13px 26px;
+
+      border: 1px solid #8d7b68;
+
+      color: var(--ink);
+      background: transparent;
+
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+      transition:
+        background 0.3s ease,
+        color 0.3s ease;
+    }
+
+    .discover:hover {
+      background: #75614f;
+      color: #fff;
+    }
+
+    /* ANIMATIONS */
+
+    @keyframes cameraIn {
+      from {
+        opacity: 0;
+        transform: scale(0.94);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes hintFade {
+      from { opacity: 0.55; }
+      to { opacity: 1; }
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+      .envelope-screen {
+        padding: 12px;
+      }
+
+      .envelope-stage {
+        width: 96vw;
+        max-height: calc(100vh - 90px);
+      }
+
+      .seal-button {
+        width: min(var(--seal-size), 12vw);
+        height: min(var(--seal-size), 12vw);
+      }
+
+      .hint {
+        top: calc(100% + 12px);
+        font-size: 10px;
+        letter-spacing: 2px;
+      }
+
+      .frame {
+        padding: 48px 20px;
+      }
+
+      .small-heading {
+        font-size: 10px;
+        letter-spacing: 3px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ENVELOPE INTRO -->
+
+  <section
+    class="envelope-screen"
+    id="envelopeScreen"
+    aria-label="Wedding invitation envelope"
+  >
+    <div class="envelope-stage" id="envelopeStage">
+
+      <img
+        class="envelope-photo envelope-closed"
+        id="closedEnvelope"
+        src="Images/envelope-closed.png"
+        alt="Closed wedding invitation envelope"
+      >
+
+
+      <button
+        class="seal-button"
+        id="openSeal"
+        type="button"
+        aria-label="Open the wedding invitation"
+      >
+        <img src="Images/seal.png" alt="">
+      </button>
+
+      <div class="hint">
+        Click the wax seal to open
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WEDDING COVER -->
+
+  <main class="cover" id="weddingCover">
+    <div class="frame">
+
+      <div class="small-heading">
+        Together with our families
+      </div>
+
+      <h1 class="names">
+        Oksana &amp; Guy
+      </h1>
+
+      <div class="small-heading">
+        Invite you to celebrate our wedding
+      </div>
+
+      <div class="date">
+        10 · 12 · 2026
+      </div>
+
+      <a class="discover" href="invitation.html">
+        Discover our wedding
+      </a>
+
+    </div>
+  </main>
+
+  <script>
+    const envelopeScreen =
+      document.getElementById("envelopeScreen");
+
+    const envelopeStage =
+      document.getElementById("envelopeStage");
+
+    const closedEnvelope =
+      document.getElementById("closedEnvelope");
+
+    const openSeal =
+      document.getElementById("openSeal");
+
+    const weddingCover =
+      document.getElementById("weddingCover");
+
+    let hasOpened = false;
+
+    function setEnvelopeRatio() {
+      if (
+        closedEnvelope.naturalWidth &&
+        closedEnvelope.naturalHeight
+      ) {
+        envelopeStage.style.setProperty(
+          "--envelope-ratio",
+          `${closedEnvelope.naturalWidth} / ${closedEnvelope.naturalHeight}`
+        );
+      }
+    }
+
+    closedEnvelope.addEventListener("load", setEnvelopeRatio);
+    setEnvelopeRatio();
+
+    openSeal.addEventListener("click", () => {
+      if (hasOpened) return;
+
+      hasOpened = true;
+      openSeal.disabled = true;
+
+      envelopeStage.classList.add("opening");
+
+      window.setTimeout(() => {
+        envelopeScreen.classList.add("leaving");
+        weddingCover.classList.add("visible");
+
+        document.body.style.overflow = "auto";
+      }, 500);
+    });
+  </script>
+
+</body>
+</html>

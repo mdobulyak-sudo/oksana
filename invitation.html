@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Oksana & Guy — Wedding Invitation</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Italianno&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8f5ee;
+            color: #494337;
+            font-family: 'Italiano', serif;
+            opacity: 0;
+            animation: reveal 1.2s ease forwards;
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            min-height: 100svh;
+            padding: 30px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .frame {
+            width: 100%;
+            max-width: 800px;
+            padding: 65px 24px;
+            border: 1px solid #c9bda5;
+            outline: 1px solid #c9bda5;
+            outline-offset: 5px;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #8a7c65;
+            margin-bottom: 35px;
+        }
+
+        h1 {
+            font-size: clamp(54px, 10vw, 100px);
+            line-height: 1;
+            font-weight: 300;
+        }
+
+        .ampersand {
+            display: block;
+            font-family: 'Italianno', cursive;
+            font-size: 68px;
+            color: #aa9675;
+            margin: 5px 0;
+        }
+
+        .intro {
+            max-width: 440px;
+            margin: 35px auto 0;
+            font-size: 20px;
+            line-height: 1.7;
+            color: #756a57;
+        }
+
+        .date {
+            margin-top: 25px;
+            font-size: 20px;
+            letter-spacing: 4px;
+        }
+
+        .section {
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .script {
+            font-family: 'Italianno', cursive;
+            font-size: 48px;
+            color: #aa9675;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: 400;
+            margin: 10px 0 25px;
+        }
+
+        .divider {
+            width: 55px;
+            height: 1px;
+            background: #b9a786;
+            margin: 25px auto;
+        }
+
+        .text {
+            font-size: 19px;
+            line-height: 1.8;
+            color: #756a57;
+        }
+
+        .details {
+            background: #eee8dc;
+        }
+
+        .detail {
+            margin: 32px 0;
+        }
+
+        .detail-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #8a7c65;
+            margin-bottom: 10px;
+        }
+
+        .detail-value {
+            font-size: 24px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 28px;
+            border: 1px solid #9c8b6e;
+            color: #756a57;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 2px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .back-button:hover {
+            background: #776b56;
+            color: #fff;
+        }
+
+        /* Parisian countdown */
+
+        .countdown-section {
+            padding: 45px 24px 20px;
+            text-align: center;
+        }
+
+        .countdown-box {
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            padding: 7px;
+            border: 1px solid #c9bda5;
+            outline: 1px solid #c9bda5;
+            outline-offset: 3px;
+            background: #f8f5ee;
+            text-align: center;
+        }
+
+        .countdown-inner {
+            border: 1px solid #e1d5bf;
+            padding: 24px 8px 20px;
+        }
+
+        .countdown-kicker {
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: #8a7c65;
+            margin-bottom: 9px;
+        }
+
+        .countdown-heading {
+            font-family: 'Italianno', cursive;
+            font-size: 38px;
+            font-weight: 400;
+            line-height: 1.2;
+            color: #aa9675;
+            margin-bottom: 22px;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            width: 100%;
+            align-items: center;
+        }
+
+        .countdown-item {
+            width: 100%;
+            min-width: 0;
+            text-align: center;
+            border-right: 1px solid #d8cbb5;
+        }
+
+        .countdown-item:last-child {
+            border-right: none;
+        }
+
+        .countdown-number {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(25px, 5vw, 36px);
+            font-weight: 400;
+            line-height: 1.1;
+            color: #494337;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .countdown-label {
+            display: block;
+            text-align: center;
+            margin-top: 7px;
+            font-size: 8px;
+            letter-spacing: 1px;
+            color: #8a7c65;
+        }
+
+        .countdown-date {
+            margin-top: 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: #aa9675;
+        }
+
+        footer {
+            padding: 25px 20px 35px;
+            text-align: center;
+            font-family: 'Italianno', cursive;
+            font-size: 34px;
+            color: #aa9675;
+        }
+
+        @media (max-width: 480px) {
+            .frame {
+                padding: 45px 15px;
+            }
+
+            .section {
+                padding: 60px 22px;
+            }
+
+            h2 {
+                font-size: 30px;
+            }
+
+            .countdown-section {
+                padding: 38px 22px 15px;
+            }
+
+            .countdown-inner {
+                padding: 20px 4px 17px;
+            }
+
+            .countdown-heading {
+                font-size: 34px;
+            }
+
+            .countdown-label {
+                font-size: 7px;
+                letter-spacing: 0.4px;
+            }
+
+            .countdown-kicker {
+                letter-spacing: 2px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body {
+                animation: none;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="hero">
+        <section class="frame">
+
+            <p class="eyebrow">The beginning of forever</p>
+
+            <h1>Oksana</h1>
+            <span class="ampersand">&</span>
+            <h1>Guy</h1>
+
+            <p class="intro">
+                Together with our families, we invite you
+                to celebrate the beginning of our life
+                together.
+            </p>
+
+            <p class="date">10 · 12 · 2026</p>
+
+            <div class="divider"></div>
+
+            <p class="text">
+                We would be delighted to share this
+                unforgettable day with you.
+            </p>
+
+        </section>
+    </main>
+
+    <section class="section">
+        <p class="script">With love</p>
+        <h2>Our Special Day</h2>
+        <div class="divider"></div>
+
+        <p class="text">
+            Two hearts, one story, and a lifetime of memories
+            waiting to be made.
+        </p>
+    </section>
+
+    <section class="section details">
+        <p class="script">Join us</p>
+        <h2>Wedding Details</h2>
+        <div class="divider"></div>
+
+        <div class="detail">
+            <p class="detail-label">Date and time</p>
+            <p class="detail-value">10 December 2026 @ 15:00</p>
+        </div>
+
+        <div class="detail">
+            <p class="detail-label">Ceremony</p>
+            <p class="detail-value">The Guildhall Market St, Poole BH15 1NF</p>
+        </div>
+
+        <div class="detail">
+            <p class="detail-label">Wedding breakfast</p>
+            <p class="detail-value">Sexy Lobster at NEO, Exeter Rd, Bournemouth BH2 5AH</p>
+        </div>
+
+        <div class="detail">
+            <p class="detail-label">Dress Code</p>
+            <p class="detail-value">Elegant Formal Attire</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <p class="script">RSVP</p>
+
+        <div class="divider"></div>
+
+        <p class="text">
+            We hope you can join us!!!
+        </p>
+
+        <a class="back-button"
+   href="mailto:beaker69.gs@gmail.com ?subject=Wedding%20RSVP%20%7C%20Oksana%20%26%20Guy">
+            RESPOND TO INVITATION
+        </a>
+    </section>
+
+    <!-- Countdown at the bottom of the website -->
+    <section class="countdown-section">
+        <div class="countdown-box">
+            <div class="countdown-inner">
+
+                <p class="countdown-kicker">OUR WEDDING DAY</p>
+
+                <p class="countdown-heading">
+                    Counting down to forever
+                </p>
+
+                <div class="countdown-grid">
+
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label">DAYS</span>
+                    </div>
+
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">HOURS</span>
+                    </div>
+
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">MINUTES</span>
+                    </div>
+
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">SECONDS</span>
+                    </div>
+
+                </div>
+
+                <p class="countdown-date">10 · 12 · 2026</p>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        Oksana & Guy · With love, always
+    </footer>
+
+    <script>
+        (() => {
+            const weddingDate = new Date('2026-12-10T15:00:00Z').getTime();
+            const ids = ['days', 'hours', 'minutes', 'seconds'];
+
+            function updateCountdown() {
+                const distance = weddingDate - Date.now();
+
+                if (distance <= 0) {
+                    document.querySelector('.countdown-heading').textContent =
+                        'Today is our special day!';
+
+                    ids.forEach(id => {
+                        document.getElementById(id).textContent = '00';
+                    });
+
+                    return;
+                }
+
+                document.getElementById('days').textContent =
+                    Math.floor(distance / 86400000);
+
+                document.getElementById('hours').textContent =
+                    String(Math.floor((distance % 86400000) / 3600000)).padStart(2, '0');
+
+                document.getElementById('minutes').textContent =
+                    String(Math.floor((distance % 3600000) / 60000)).padStart(2, '0');
+
+                document.getElementById('seconds').textContent =
+                    String(Math.floor((distance % 60000) / 1000)).padStart(2, '0');
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        })();
+    </script>
+
+</body>
+</html>
