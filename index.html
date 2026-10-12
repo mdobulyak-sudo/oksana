@@ -382,7 +382,7 @@
       <img
         class="envelope-photo envelope-closed"
         id="closedEnvelope"
-      
+        src="./images/envelope-closed.png"
         alt="Closed wedding invitation envelope"
       >
 
@@ -432,52 +432,8 @@
   </main>
 
   <script>
-    const envelopeScreen =
-      document.getElementById("envelopeScreen");
-
-    const envelopeStage =
-      document.getElementById("envelopeStage");
-
-    const closedEnvelope =
-      document.getElementById("closedEnvelope");
-
-    const openSeal =
-      document.getElementById("openSeal");
-
-    const weddingCover =
-      document.getElementById("weddingCover");
-
-    let hasOpened = false;
-
-    function setEnvelopeRatio() {
-      if (
-        closedEnvelope.naturalWidth &&
-        closedEnvelope.naturalHeight
-      ) {
-        envelopeStage.style.setProperty(
-          "--envelope-ratio",
-          `${closedEnvelope.naturalWidth} / ${closedEnvelope.naturalHeight}`
-        );
-      }
-    }
-
-    closedEnvelope.addEventListener("load", setEnvelopeRatio);
-    setEnvelopeRatio();
-
-    openSeal.addEventListener("click", () => {
-      if (hasOpened) return;
-
-      hasOpened = true;
-      openSeal.disabled = true;
-
-      envelopeStage.classList.add("opening");
-
-      window.setTimeout(() => {
-        envelopeScreen.classList.add("leaving");
-        weddingCover.classList.add("visible");
-
-        document.body.style.overflow = "auto";
-      }, 500);
+    document.getElementById("openSeal").addEventListener("click", () => {
+    window.location.href = "invitation.html";
     });
   </script>
 
