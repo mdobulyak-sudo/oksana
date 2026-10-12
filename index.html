@@ -122,8 +122,10 @@
             left: var(--seal-x);
             top: var(--seal-y);
 
-            width: var(--seal-size);
-            height: var(--seal-size);
+              /* Responsive seal size */
+              width: clamp(90px, 18vw, 235px);
+              height: clamp(90px, 18vw, 235px);
+
 
             display: flex;
             align-items: center;
@@ -327,9 +329,10 @@
     /* MOBILE */
 
     @media (max-width: 600px) {
-      .envelope-screen {
-        padding: 12px;
-      }
+          .seal-button {
+      width: min(var(--seal-size), 12vw);
+      height: min(var(--seal-size), 12vw);
+          }
 
       .envelope-stage {
         width: 96vw;
