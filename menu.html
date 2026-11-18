@@ -1,0 +1,650 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Menu Selection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f8f6f1;
+  color: #34332f;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+  max-width: 760px;
+  margin: auto;
+  padding: 65px 24px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 55px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #9a896b;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 55px;
+  margin: 18px 0;
+}
+
+.header p {
+  font-size: 12px;
+  color: #88847c;
+  line-height: 2;
+}
+
+.divider {
+  width: 45px;
+  height: 1px;
+  background: #c5ad85;
+  margin: 25px auto;
+}
+
+.guest-details {
+  max-width: 480px;
+  margin: 0 auto 50px;
+  display: grid;
+  gap: 25px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field label {
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  color: #9a896b;
+}
+
+.field input,
+.field textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #d9d2c6;
+  padding: 13px 0;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: #34332f;
+  border-radius: 0;
+  width: 100%;
+}
+
+.field textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-bottom-color: #a18a66;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #b7b0a6;
+  font-weight: 300;
+}
+
+.section {
+  margin-bottom: 48px;
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #999187;
+  margin-bottom: 25px;
+}
+
+/* One dish per row on every screen size */
+.options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.option {
+  display: block;
+  width: 100%;
+  border: 1px solid #e2ddd3;
+  background: #fffdfa;
+  padding: 24px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .25s ease;
+  position: relative;
+}
+
+.option:hover {
+  border-color: #b9a17c;
+  transform: translateY(-2px);
+}
+
+.option.selected {
+  border: 1px solid #ad956c;
+  background: #f3efe7;
+}
+
+.option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 12px;
+  color: #a28a64;
+}
+
+.option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dish-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.dish-description {
+  font-size: 11px;
+  line-height: 1.9;
+  color: #817c73;
+}
+
+.steak-note {
+  font-size: 9px;
+  color: #a08b68;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 12px;
+}
+
+#steakOptions {
+  display: none;
+  margin-top: 25px;
+  text-align: center;
+  padding: 25px;
+  border: 1px solid #e2ddd3;
+  background: #fffdfa;
+}
+
+#steakOptions.visible {
+  display: block;
+}
+
+.steak-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.steak-options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.steak-options label {
+  border: 1px solid #e2ddd3;
+  padding: 12px 17px;
+  cursor: pointer;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.steak-options input {
+  accent-color: #a28a64;
+  margin-right: 5px;
+}
+
+button {
+  display: block;
+  margin: 45px auto 0;
+  padding: 17px 40px;
+  background: #3b3934;
+  color: #fff;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: .3s;
+}
+
+button:hover {
+  background: #a18a66;
+}
+
+.footer {
+  margin-top: 55px;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #a39784;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 45px 17px;
+  }
+
+  h1 {
+    font-size: 43px;
+  }
+
+  .option {
+    padding: 22px 17px;
+  }
+
+  .dish-name {
+    font-size: 25px;
+  }
+
+  .dish-description {
+    max-width: 280px;
+    margin: auto;
+  }
+
+  button {
+    width: 100%;
+    padding: 17px 15px;
+  }
+}
+
+.confirmation {
+  text-align: center;
+  padding: 65px 20px;
+  background: #fffdfa;
+  border: 1px solid #e2ddd3;
+  margin-top: 30px;
+}
+
+.confirmation h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 400;
+  color: #34332f;
+}
+
+.confirmation p {
+  font-size: 12px;
+  line-height: 2;
+  color: #817c73;
+}
+
+.confirmation .divider {
+  margin: 25px auto;
+}
+
+.confirmation .selection {
+  margin-top: 30px;
+  text-align: left;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.confirmation .selection p {
+  border-bottom: 1px solid #e2ddd3;
+  padding: 12px 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <header class="header">
+    <div class="eyebrow">Celebrating our love</div>
+    <h1>Wedding Menu</h1>
+    <div class="divider"></div>
+    <p>
+      We would be delighted to know your dining preferences.<br>
+      Please select one dish from each course below.
+    </p>
+  </header>
+
+  <form id="menuForm"
+        action="https://formsubmit.co/Guy@crsgassolutions.co.uk"
+        method="POST">
+
+    <input type="hidden" name="_subject" value="Wedding Menu Selection">
+    <input type="hidden" name="_template" value="table">
+
+    <!-- GUEST DETAILS -->
+    <div class="guest-details">
+
+      <div class="field">
+        <label for="guestName">YOUR NAME</label>
+        <input type="text" id="guestName"
+               name="guestName"
+               placeholder="Full name" required>
+      </div>
+
+      <div class="field">
+        <label for="guestEmail">EMAIL ADDRESS</label>
+        <input type="email" id="guestEmail"
+               name="guestEmail"
+               placeholder="Your email address" required>
+      </div>
+
+      <div class="field">
+        <label for="allergies">FOOD ALLERGIES & DIETARY REQUIREMENTS</label>
+        <textarea id="allergies" name="allergies"
+          placeholder="Please let us know about any allergies or dietary requirements (if none, leave blank)."
+          rows="3"></textarea>
+      </div>
+
+    </div>
+
+    <!-- STARTER -->
+    <section class="section">
+      <h2 class="section-title">Starter</h2>
+      <div class="section-subtitle">Please choose one</div>
+
+      <div class="options">
+
+        <label class="option">
+          <input type="radio" name="starter" value="Bayonne Ham">
+          <div class="dish-name">Bayonne Ham</div>
+          <div class="dish-description">
+            Celeriac remoulade (308kcal)
+          </div>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="starter" value="Langoustine Provençal">
+          <div class="dish-name">Langoustine Provençal</div>
+          <div class="dish-description">
+            Sautéed scampi in a tomato and patis sauce with sourdough (607kcal)
+          </div>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="starter" value="Spiced Pickled Beetroot & Plant Based Blue Cheese Salad">
+          <div class="dish-name">Spiced Pickled Beetroot & Plant Based Blue Cheese Salad [VGI]</div>
+          <div class="dish-description">
+            Plant based blue wheel cheese, endive, sourdough croutons and sweet mustard dressing (431kcal)
+          </div>
+        </label>
+
+      </div>
+    </section>
+
+    <!-- MAIN COURSE -->
+    <section class="section">
+      <h2 class="section-title">Main Course</h2>
+      <div class="section-subtitle">Please choose one</div>
+
+      <div class="options">
+
+        <label class="option">
+          <input type="radio" name="main" value="Chargrilled Rib Eye Steak au Poirve">
+          <div class="dish-name">Chargrilled Rib Eye Steak au Poirve</div>
+          <div class="dish-description">
+            Pont Neuf, haricot vert, Provençal tomato and watercress (1,295kcal)
+          </div>
+          <div class="steak-note">Steak Doneness required</div>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="main" value="Tuna Steak">
+          <div class="dish-name">Tuna Steak</div>
+          <div class="dish-description">
+            Pont Neuf, haricot vert, warm nicoise salad, basil pesto (890kcal)
+          </div>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="main" value="Halloumi Schnitzel [V]">
+          <div class="dish-name">Halloumi Schnitzel [V]</div>
+          <div class="dish-description">
+            Pont Neuf, haricot vert, beurre noisette, pickled red cabbage, red pepper and roquette salad (1008kcal)
+          </div>
+        </label>
+
+      </div>
+
+      <!-- STEAK DONENESS -->
+      <div id="steakOptions">
+        <div class="steak-title">How would you like your steak?</div>
+        <div class="section-subtitle">Please select your preferred doneness</div>
+
+        <div class="steak-options">
+
+          <label><input type="radio" name="doneness" value="Rare"> Rare</label>
+          <label><input type="radio" name="doneness" value="Medium Rare"> Medium Rare</label>
+          <label><input type="radio" name="doneness" value="Medium"> Medium</label>
+          <label><input type="radio" name="doneness" value="Medium Well"> Medium Well</label>
+          <label><input type="radio" name="doneness" value="Well Done"> Well Done</label>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- DESSERT -->
+    <section class="section">
+      <h2 class="section-title">Dessert</h2>
+      <div class="section-subtitle">Please choose one</div>
+
+      <div class="options">
+
+        <label class="option">
+         <input type="radio" name="dessert" value="Paris-Brest [V]">
+          <div class="dish-name">Paris-Brest [V]</div>
+          <div class="dish-description">
+            Choux pastry filled with a praline mousse (950kcal)
+          </div>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="dessert" value="Bluberry & Lemon Crd Fool [VGI]">
+          <div class="dish-name">Bluberry & Lemon Crd Fool [VGI]</div>
+          <div class="dish-description">
+
+          </div>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="dessert" value="Assiette de Fromage">
+          <div class="dish-name">Assiette de Fromage</div>
+          <div class="dish-description">
+            Artisan cheese, biscuits and chutney (487kcal)
+          </div>
+        </label>
+
+      </div>
+    </section>
+
+    <button type="submit">Confirm My Selection</button>
+
+  </form>
+
+  <footer class="footer">
+    WITH LOVE & GRATITUDE GUY & OKSANA
+  </footer>
+
+</div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Highlight selected dishes
+  document.querySelectorAll('.option input').forEach(input => {
+    input.addEventListener('change', () => {
+      document.querySelectorAll(`input[name="${input.name}"]`)
+        .forEach(radio => {
+          radio.closest('.option').classList.remove('selected');
+        });
+
+      input.closest('.option').classList.add('selected');
+    });
+  });
+
+  // Show steak doneness
+  const mainRadios = document.querySelectorAll('input[name="main"]');
+  const steakOptions = document.getElementById('steakOptions');
+
+  mainRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.value === 'Chargrilled Rib Eye Steak au Poirve') {
+        steakOptions.classList.add('visible');
+      } else {
+        steakOptions.classList.remove('visible');
+
+        document.querySelectorAll('input[name="doneness"]')
+          .forEach(el => el.checked = false);
+      }
+    });
+  });
+
+  // Validate and submit form
+
+document.getElementById('menuForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const form = this;
+
+  const starter = form.querySelector('input[name="starter"]:checked');
+  const main = form.querySelector('input[name="main"]:checked');
+  const dessert = form.querySelector('input[name="dessert"]:checked');
+  const doneness = form.querySelector('input[name="doneness"]:checked');
+
+  if (!starter || !main || !dessert) {
+    alert('Please select one dish from each course.');
+    return;
+  }
+
+  if (
+    main.value === 'Chargrilled Rib Eye Steak au Poirve' &&
+    !doneness
+  ) {
+    alert('Please select your preferred steak doneness.');
+    return;
+  }
+
+  const button = form.querySelector('button[type="submit"]');
+  button.disabled = true;
+  button.textContent = 'Submitting...';
+
+  const formData = Object.fromEntries(new FormData(form).entries());
+
+  try {
+    const response = await fetch(
+      'https://formsubmit.co/ajax/Guy@crsgassolutions.co.uk',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || result.success === false) {
+      throw new Error('Submission failed');
+    }
+
+    const name = formData.guestName;
+
+    form.innerHTML = `
+      <div class="confirmation">
+        <div class="eyebrow">Celebrating our love</div>
+
+        <h2>Thank You, ${name}!</h2>
+
+        <div class="divider"></div>
+
+        <p>
+          Your menu selection has been successfully submitted.
+          We have received your preferences.
+        </p>
+
+        <div class="selection">
+          <h3>Your Menu Selection</h3>
+
+          <p><strong>Starter:</strong> ${starter.value}</p>
+
+          <p><strong>Main Course:</strong> ${main.value}</p>
+
+          ${doneness && main.value === 'Chargrilled Rib Eye Steak au Poirve'
+            ? `<p><strong>Steak Doneness:</strong> ${doneness.value}</p>`
+            : ''}
+
+          <p><strong>Dessert:</strong> ${dessert.value}</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <p>
+          We look forward to celebrating with you!
+        </p>
+
+        <p style="margin-top: 25px; letter-spacing: 2px;">
+          WITH LOVE & GRATITUDE<br>
+          GUY & OKSANA
+        </p>
+      </div>
+    `;
+
+    form.scrollIntoView({ behavior: 'smooth' });
+
+   } catch (error) {
+    button.disabled = false;
+    button.textContent = 'Confirm My Selection';
+    alert('Something went wrong. Please try again.');
+  }
+});
+
+}); // Закрываем DOMContentLoaded
+
+</script>
+
+</body>
+</html>
